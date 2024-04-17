@@ -14,6 +14,7 @@
     <FileVersion>0.0.2</FileVersion>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <Platforms>AnyCPU;ARM64</Platforms>
+    <PackageProjectUrl>https://github.com/FlHinrichsen/RPI-4Bit-LCD</PackageProjectUrl>
     <Version>0.0.2</Version>
   </PropertyGroup>
 
