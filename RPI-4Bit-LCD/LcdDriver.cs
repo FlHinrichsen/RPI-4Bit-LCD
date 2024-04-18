@@ -56,7 +56,19 @@ namespace RPI_4Bit_LCD
       lcd_send_byte(0x28, lcdCmd);
       lcd_send_byte(0x0C, lcdCmd);
       lcd_send_byte(0x06, lcdCmd);
+      Clear();
+    }
+
+    public void Clear()
+    {
       lcd_send_byte(0x01, lcdCmd);
+    }
+
+    public void WriteScreen(string l1, string l2)
+    {
+      Clear();
+      WriteLine1(l1);
+      WriteLine2(l2);
     }
 
     public void WriteLine1(string text)
