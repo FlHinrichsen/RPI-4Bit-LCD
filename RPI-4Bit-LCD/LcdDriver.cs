@@ -50,6 +50,8 @@
     public void Init()
     {
       InitPin();
+      lcd_send_byte(0x33, lcdCmd);
+      lcd_send_byte(0x32, lcdCmd);
       lcd_send_byte(0x28, lcdCmd);
       DisplayOptions(true,false,false);
       DisplayMode(true,false);
