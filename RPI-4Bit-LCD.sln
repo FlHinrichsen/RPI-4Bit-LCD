@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPI-4Bit-LCD", "RPI-4Bit-LCD\RPI-4Bit-LCD.csproj", "{4341249F-1F12-417A-BEFC-589B8A1AAAF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPI-4Bit-LCD", "RPI-4Bit-LCD\RPI-4Bit-LCD.csproj", "{4341249F-1F12-417A-BEFC-589B8A1AAAF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{8FFB247C-FB1A-4607-90D5-F25EE83BE967}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{4341249F-1F12-417A-BEFC-589B8A1AAAF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4341249F-1F12-417A-BEFC-589B8A1AAAF4}.Release|ARM64.ActiveCfg = Release|ARM64
 		{4341249F-1F12-417A-BEFC-589B8A1AAAF4}.Release|ARM64.Build.0 = Release|ARM64
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Release|ARM64.ActiveCfg = Release|ARM64
+		{8FFB247C-FB1A-4607-90D5-F25EE83BE967}.Release|ARM64.Build.0 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
