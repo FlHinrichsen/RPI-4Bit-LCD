@@ -164,7 +164,11 @@
 
     private void lcd_message(string text)
     {
-      text = text.Substring(0, lcdWidth);
+      if (text.Length > lcdWidth)
+      {
+        text = text.Substring(0, lcdWidth);
+      }
+
       foreach (char c in text)
       {
         lcd_send_byte((byte)c, lcdChr);
