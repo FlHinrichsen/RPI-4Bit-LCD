@@ -22,9 +22,9 @@
 
     private readonly byte lcdLine2 = 0xC0;     // Adresse der zweiten Display Zeile
 
-    private readonly int ePulse = 5;
+    private readonly int ePulse = 1;
 
-    private readonly int eDelay = 5;
+    private readonly int eDelay = 1;
 
     private readonly bool lcdChr = true;
 
@@ -49,17 +49,21 @@
     /// </summary>
     public void Init()
     {
+      InitPin();
+      lcd_send_byte(0x28, lcdCmd);
+      DisplayOptions(true,false,false);
+      DisplayMode(true,false);
+      Clear();
+    }
+
+    private void InitPin()
+    {
       gpioController.OpenPin(lcdRs, PinMode.Output);
       gpioController.OpenPin(lcdE, PinMode.Output);
       gpioController.OpenPin(lcdData4, PinMode.Output);
       gpioController.OpenPin(lcdData5, PinMode.Output);
       gpioController.OpenPin(lcdData6, PinMode.Output);
       gpioController.OpenPin(lcdData7, PinMode.Output);
-      
-      lcd_send_byte(0x28, lcdCmd);
-      DisplayOptions(true,false,false);
-      DisplayMode(true,false);
-      Clear();
     }
 
     /// <summary>
@@ -74,17 +78,17 @@
 
       if (d)
       {
-        data = (byte)(data & 0x04);
+        data += 0x04;
       }
 
       if (c)
       {
-        data = (byte)(data & 0x02);
+        data += 0x02;
       }
 
       if (b)
       {
-        data = (byte)(data & 0x01);
+        data += 0x01;
       }
 
       lcd_send_byte(data, lcdCmd);
@@ -101,12 +105,12 @@
 
       if (id)
       {
-        data = (byte)(data & 0x02);
+        data += 0x02;
       }
 
       if (s)
       {
-        data = (byte)(data & 0x01);
+        data += 0x01;
       }
 
       lcd_send_byte(data, lcdCmd);
