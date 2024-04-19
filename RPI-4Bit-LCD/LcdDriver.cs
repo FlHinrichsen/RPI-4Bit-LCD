@@ -1,8 +1,7 @@
-﻿using Unosquare.RaspberryIO;
-using Unosquare.RaspberryIO.Abstractions;
-
-namespace RPI_4Bit_LCD
+﻿namespace RPI_4Bit_LCD
 {
+  using System.Device.Gpio;
+
   public class LcdDriver
   {
     private readonly byte lcdRs;
@@ -31,8 +30,11 @@ namespace RPI_4Bit_LCD
 
     private readonly bool lcdCmd = false;
 
-    public LcdDriver(byte lcdRs, byte lcdE, byte lcdData4, byte lcdData5, byte lcdData6, byte lcdData7, byte lcdWidth = 16)
+    private GpioController gpioController;
+
+    public LcdDriver(GpioController gpioController, byte lcdRs, byte lcdE, byte lcdData4, byte lcdData5, byte lcdData6, byte lcdData7, byte lcdWidth = 16)
     {
+      this.gpioController = gpioController;
       this.lcdRs = lcdRs;
       this.lcdE = lcdE;
       this.lcdData4 = lcdData4;
@@ -47,12 +49,12 @@ namespace RPI_4Bit_LCD
     /// </summary>
     public void Init()
     {
-      Pi.Gpio[lcdRs].PinMode = GpioPinDriveMode.Output;
-      Pi.Gpio[lcdE].PinMode = GpioPinDriveMode.Output;
-      Pi.Gpio[lcdData4].PinMode = GpioPinDriveMode.Output;
-      Pi.Gpio[lcdData5].PinMode = GpioPinDriveMode.Output;
-      Pi.Gpio[lcdData6].PinMode = GpioPinDriveMode.Output;
-      Pi.Gpio[lcdData7].PinMode = GpioPinDriveMode.Output;
+      gpioController.OpenPin(lcdRs, PinMode.Output);
+      gpioController.OpenPin(lcdE, PinMode.Output);
+      gpioController.OpenPin(lcdData4, PinMode.Output);
+      gpioController.OpenPin(lcdData5, PinMode.Output);
+      gpioController.OpenPin(lcdData6, PinMode.Output);
+      gpioController.OpenPin(lcdData7, PinMode.Output);
       
       lcd_send_byte(0x28, lcdCmd);
       DisplayOptions(true,false,false);
@@ -163,30 +165,35 @@ namespace RPI_4Bit_LCD
       }
     }
 
+    private void writeBoolean(int pin, bool value)
+    {
+      gpioController.Write(pin, value ? PinValue.High : PinValue.Low);
+    }
+
     private void lcd_send_byte(byte bits, bool mode)
     {
-      Pi.Gpio[lcdRs].Write(mode);
+      writeBoolean(lcdRs, mode);
 
-      Pi.Gpio[lcdData4].Write((bits & 0x10) == 0x10);
-      Pi.Gpio[lcdData5].Write((bits & 0x20) == 0x20);
-      Pi.Gpio[lcdData6].Write((bits & 0x40) == 0x40);
-      Pi.Gpio[lcdData7].Write((bits & 0x80) == 0x80);
+      writeBoolean(lcdData4, (bits & 0x10) == 0x10);
+      writeBoolean(lcdData5, (bits & 0x20) == 0x20);
+      writeBoolean(lcdData6, (bits & 0x40) == 0x40);
+      writeBoolean(lcdData7, (bits & 0x80) == 0x80);
 
       Thread.Sleep(eDelay);
-      Pi.Gpio[lcdE].Write(true);
+      writeBoolean(lcdE, true);
       Thread.Sleep(ePulse);
-      Pi.Gpio[lcdE].Write(false);
+      writeBoolean(lcdE, false);
       Thread.Sleep(eDelay);
 
-      Pi.Gpio[lcdData4].Write((bits & 0x01) == 0x01);
-      Pi.Gpio[lcdData5].Write((bits & 0x02) == 0x02);
-      Pi.Gpio[lcdData6].Write((bits & 0x04) == 0x04);
-      Pi.Gpio[lcdData7].Write((bits & 0x08) == 0x08);
+      writeBoolean(lcdData4, (bits & 0x01) == 0x01);
+      writeBoolean(lcdData5, (bits & 0x02) == 0x02);
+      writeBoolean(lcdData6, (bits & 0x04) == 0x04);
+      writeBoolean(lcdData7, (bits & 0x08) == 0x08);
 
       Thread.Sleep(eDelay);
-      Pi.Gpio[lcdE].Write(true);
+      writeBoolean(lcdE, true);
       Thread.Sleep(ePulse);
-      Pi.Gpio[lcdE].Write(false);
+      writeBoolean(lcdE, false);
       Thread.Sleep(eDelay);
     }
   }
